@@ -1,6 +1,6 @@
 ---
 title: "GGPlot"
-subtitle: "Version 1.1.3 - December 2024"
+subtitle: "Version 1.1.4 - December 2024"
 author: "Marco Torchiano"
 format: 
   revealjs:
@@ -77,6 +77,8 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 # Introduction
 
+## GGplot2
+
 The **`ggplot2`** is package for producing statistical graphics.
 
 -   based on a grammar
@@ -133,7 +135,9 @@ ggplot(series, aes(x=i,y=fibonacci))+geom_point()
 
 # Mappings
 
-![](GGsteps.svg)
+## Encoding Steps
+
+![](images/GGsteps.svg)
 
 -   Scale depends on the type of aesthetics
     -   for position (x, y) is by default a simple linear scale
@@ -144,10 +148,10 @@ ggplot(series, aes(x=i,y=fibonacci))+geom_point()
 Both scale and coordinates have (implicit) defaults:
 
 -   the default scale depends on
-    -   the specific aestethics
+    -   the specific aesthetics
     -   the type of the variable
 -   the default coordinate system is `coord_cartesian()`
-    -   another option is `coor_polar()`
+    -   another option is `coord_polar()`
 
 ## Default scale adapts to variable
 
@@ -230,6 +234,8 @@ ggplot(series,
 ```
 
 # Geometry layers
+
+## Geometry functions
 
 Geometry function add new layers
 
