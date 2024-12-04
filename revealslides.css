@@ -1,0 +1,174 @@
+
+/** OVERRIDING DEFAULT SETTINGS **/
+
+h1.title {
+  color: darkorange;
+}
+
+
+h2 {
+  border-bottom: solid 2pt darkorange;
+  border-radius: 1pt;
+}
+
+h1 + h2 {
+  border-bottom: none;
+}
+
+h3 {
+  line-height: 1.2;
+  margin-bottom: 16pt;
+  color: darkorange;
+}
+
+
+input, textarea, select, select option {
+    font-size: 30px;
+}
+
+
+blockquote {
+  font-family: Times, Serif;
+  font-style: italic;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+blockquote blockquote {
+   font-family: Verdana, sans-serif;
+   color: gray;
+   font-size: 50%;
+}
+
+figure figurecaption {
+  font-size: 75%;
+}
+
+pre {
+    font-family: "Consolas","Courier New", monospace;
+    font-weight: 400;
+    font-size: 32pt;
+}
+/*
+pre {
+  border-bottom: ridge 2pt darkgray;
+  border-top: ridge 2pt darkgray;
+  font-size: 24pt;
+  line-height: 28pt;
+  background-color: seashell;
+  left:-10px;
+  padding: 5px 0 5px 20px;;
+}
+*/
+
+pre code {
+  font-size: 1.5em;
+  line-height: 110%;
+}
+
+.cell-output pre code {
+  background-color: seashell;
+  line-height: 110%;
+}
+
+.reveal p img { 
+  margin-bottom: -6pt;
+}
+
+.reveal li img { 
+  margin-bottom: -6pt;
+}
+
+.cell-output-display div.form-group {
+  width: 100%;
+}
+
+/*
+code {
+  font-family: "Consolas","Courier New", monospace;
+  font-weight: 400;
+  background-color: rgb(240,240,240);
+  border-radius: 5pt;
+  border-style: dotted;
+  border-color: rgb(120,120,120);
+  border-width: 1px;
+  padding-left: 2pt;
+  padding-right: 2pt;
+}
+*/
+
+strong code {
+  color: darkorange;
+} 
+
+strong {
+  color: darkorange;
+}
+
+strong > code {
+  font-weight: 800;
+  padding: 1pt;
+}
+
+em {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-style: italic;
+  color: darkslategray;
+}
+
+p code, li code {
+  font-size: 0.8em;
+}
+
+code em, pre em{
+  font-family: inherit;
+}
+
+strong + code {
+    border-left-style: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+dt {
+  margin-top: 12pt;
+}
+
+dd {
+  margin-left: 2em;
+}
+
+table:not(.datepicker) {
+  width: 90%;
+  border-collapse:collapse;
+}
+
+table:not(.datepicker) tr:nth-child(odd){
+  background-color: rgb(250,235,220);
+}
+table:not(.datepicker) tr:nth-child(even){
+  background-color: white;
+}
+
+table:not(.datepicker) th {
+  font-size: 100%;
+  background-color: orange;
+  background: linear-gradient(orange,darkorange); 
+}
+
+table:not(.datepicker) td, table th {
+  font-size: 100%;
+  padding: 0.2em 0.2em;
+}
+
+/* fix for bootstrap bugs in print.less */
+@media print {
+  code.sourceCode a[href]:after {
+    content: "";
+  }
+  
+  pre.sourceCode > code.sourceCode > span {
+    padding-left: 0;
+  }
+}

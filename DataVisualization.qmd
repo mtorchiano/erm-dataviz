@@ -1,0 +1,361 @@
+---
+title: "Data Visualization"
+author: "Marco Torchiano <marco.torchiano@polito.it>"
+subtitle: "Version 4.0.0 - December 2024"
+#date: 2024-12-04
+format: 
+  revealjs:
+    slide-number: "c"
+    css: revealslides.css
+    logo: "images/DataViz-logo.svg"
+---
+
+```{r setup, echo=FALSE, include=FALSE}
+options(width = 55)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+theme_set(theme_bw())
+ggplot2::update_geom_defaults("point", list(color = "darkorange1"))
+ggplot2::update_geom_defaults("line", list(color = "darkorange1"))
+ggplot2::update_geom_defaults("bar", list(fill="moccasin",color="darkorange"))
+ggplot2::update_geom_defaults("col", list(fill="moccasin",color="darkorange"))
+
+```
+
+## License ![](CC-BY-SA.png) {.smaller}
+
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+-   You are free to:
+
+    -   Share - copy and redistribute the material in any medium or format
+    -   Adapt - remix, transform, and build upon the material
+
+    for any purpose, even commercially.
+
+    The licensor cannot revoke these freedoms as long as you follow the license terms.
+
+-   Under the following terms:
+
+    -   **Attribution** - You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+    -   **ShareAlike** - If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+## Agenda
+
+-   Introduction and motivation for data-viz
+-   Visual perception
+-   Visualization pipeline
+-   Visual integrity
+
+# Introduction
+
+## Definition
+
+### Data Visualization ::=
+
+### Encode data through visual features
+
+### in order to convey useful information
+
+## Motivation
+
+### Information **retrieval**
+
+-   An experiment showed information to two groups of participants
+
+-   After 3 days:
+
+    -   Text alone: 10% correct retrieval
+    -   Text + visuals: 65% correct retrieval
+
+::: aside
+<small>John Medina, Brain Rules, 2008</small>
+:::
+
+## Motivation
+
+*Information retrieval*
+
+### Information **density**
+
+In principle every single pixel in an image could encode a datum:
+
+-   XGA (1024x768) \~ 1 M pixels \~ 1 M characters \~ 250 pages
+-   4K (3840x2160) \~ 8 M pixesl \~ 8 M characters \~ 2 K pages
+
+## Motivation {.scrollable}
+
+![](images/DV_InfoDensity.jpg)
+
+::: aside
+<small>Source: http://www.mamartino.com/projects/rise_of_partisanship/index.html</small>
+:::
+
+## Motivation
+
+*Information retrieval*
+
+*Information density*
+
+### Information **context**
+
+Visualization compares multiple values and puts the information into **context**.
+
+A single number means nothing.
+
+## Motivation {.scrollable}
+
+![](images/DV_InfoContext.png)
+
+::: aside
+<small>Source: http://www.nytimes.com/interactive/2015/02/23/business/economy/the-changing-nature-of-middle-class-jobs.html</small>
+:::
+
+# Visual Perception
+
+## Visual Perception
+
+![](images/VisualPerception_schema.svg)
+
+## Memory Hierarchy
+
+-   Iconic memory (visual sensory register)
+    -   Pre-attentive processing
+    -   Detects a limited number of attributes
+-   Short-term memory (working memory)
+    -   Store visual chunks
+    -   Limited number
+-   Long-term memory
+    -   Store high-level knowledge
+
+## Simplified Memory Model
+
+-   The three levels of memory represent a simplified model
+    -   does not correspond to "real" physical structure
+-   Useful to explain a few phenomena
+    -   The 7 ± 2 rule
+    -   Change blindness
+
+------------------------------------------------------------------------
+
+![](images/Plane1.jpg)
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+![](images/Plane2.jpg)
+
+# Visualization Pipeline
+
+------------------------------------------------------------------------
+
+![](images/VisualPerception-InfoViz.svg)
+
+## Visual Perception
+
+Any variable (measure) must be visually encoded, i.e. we need to identify:
+
+-   Visual object to represent entity
+-   Visual attribute to represent the measure
+
+Two main types:
+
+-   Quantitative (different properties)
+-   Categorical (ordinal or not)
+
+## Visual Attributes
+
+| Category         | Attributes                                     |                                                      |
+|---------------------|---------------------------|-------------------------|
+| Form             | Length/distance<br>Size<br>Line width<br>Shape | Orientation<br>Curvature<br>Added marks<br>Enclosure |
+| Color            | Hue<br>Saturation                              | Intensity                                            |
+| Spatial position | 2-D position                                   |                                                      |
+| Motion           | Flicker<br>Speed                               | Direction                                            |
+
+## Example
+
+Votes received by four candidates in recent elections
+
+| Candidate |  Votes | Proportion |
+|:----------|-------:|-----------:|
+| Sergio    | 197800 |     50.09% |
+| Alberto   | 140545 |     35.59% |
+| Giorgio   |  53748 |     13.61% |
+| Valter    |   2759 |      0.70% |
+
+## Encoding
+
+-   Visual object: line
+-   Visual attribute: length
+
+![](images/VisualPerception-Encoding.svg)
+
+## Visual Reasoning
+
+Layout and visual attributes allow:
+
+-   Discrimination
+    -   Distinguish visual objects or group of -
+-   Comparison
+    -   Place visual objects in order
+-   Magnitude assessment
+    -   Evaluate the (relative) magnitude of visual objects
+
+## Reasoning
+
+-   Discrimination
+
+![](images/VisualPerception-Discrimination.svg)
+
+## Reasoning
+
+-   Comparison
+
+![](images/VisualPerception-Comparison.svg)
+
+## Reasoning
+
+-   Assessment
+
+![](images/VisualPerception-Assessment.svg)
+
+## Understanding {.smaller}
+
+-   Variation within quantitative measures
+    -   Distribution
+    -   Deviation
+-   Variation within category
+    -   Ranking
+    -   Part-to-whole
+    -   Time
+    -   Space
+-   Multivariate
+    -   Correlation
+
+## Understanding
+
+-   E.g., Ranking
+
+![](images/VisualPerception-Understanding.svg)
+
+# Visual Integrity
+
+## Principles of Integrity
+
+-   **Proportionality**
+    -   Representation as physical quantities should be proportional to the represented numbers
+-   **Utility**
+    -   Graphical element should convey useful information
+-   **Clarity**
+    -   Labeling should counter graphical distortion and ambiguity
+
+## Proportionality
+
+-   The magnitude of visual attributes should represent faithfully the magnitude of measures
+
+-   They should allow faithful
+
+    -   Discrimination: are they different?
+    -   Comparison: which is larger?
+    -   Magnitude Assessment: how much larger?
+
+## Lie Factor
+
+$$ LF = \frac{\text{size of effect shown in graphics}}{\text{size of effect in data}}$$ ![](images/Perception-LieFactor.svg){width="100%"}
+
+## Guidelines for design
+
+-   Keep the physical Lie Factor \~ 1
+-   Limit the perceptual Lie Factor as much as possible
+-   Avoid area comparisons (see Stevens' law)
+
+## Utility
+
+-   Every element should convey useful information
+-   Unnecessary visual objects or attributes distract from the message
+-   Different attributes trigger a search for a rationale (e.g. random colors)
+
+## Data-ink
+
+-   Proportion of a graphic's ink devoted to the non-redundant display of data information
+
+$$ \text{Data-ink ratio} = \frac{\text{data ink}}{\text{total ink used in graphic}} $$
+
+Or:
+
+$$ \text{Data-ink ratio} = 1 - \frac{\text{disposable ink}}{\text{total ink used in graphic}} $$
+
+## Guidelines for design
+
+-   Maximize data-ink ratio
+
+-   Erase non-data-ink
+
+-   Erase redundant data-ink
+
+    -   "Within reason"
+
+> Above all else show the data
+
+::: aside
+<small>Edward Tufte, Visualization of Quantitative Information, 1983</small>
+:::
+
+## Clarity
+
+-   Visual encoding and layout should make perception tasks easy and effortless
+-   Textual and support elements should provide effective support to understanding the information
+-   Any variation in the graph should represent useful information otherwise it is noise obfuscating the message
+
+## Clarity - Supporting elements
+
+-   Textual elements should provide effective support to understanding
+    -   Hierarchical
+        -   Size and position reflects importance
+    -   Readable
+        -   Large enough
+    -   Horizontal
+    -   Close to data (avoid legends)
+-   Always label the axes
+
+## Clarity - Colors
+
+-   Get it right in black and white
+-   Use medium hues or pastels
+    -   Bright colors distract and tire out
+-   Use strong color only when needed to serve a particular communication goal
+
+## Cognitive Dissonance
+
+::: r-stack
+::: {.fragment data-id="box1" style="color:white; background: black; width: 300px; height: 250px; margin: 50px; padding: 50px; font-size:200%; text-align:center;"}
+BLACK
+:::
+
+::: {.fragment data-id="box1" style="color:white; background: red; width: 300px; height: 250px; margin: 50px; padding: 50px; font-size:200%;"}
+GREEN
+:::
+
+::: {.fragment data-id="box2" style="color:white; background: gold; width: 300px; height: 250px; margin: 50px; padding: 50px; font-size:200%;"}
+RED
+:::
+
+::: {.fragment data-id="box3" style="color:white; background: green; width: 300px; height: 250px; margin: 50px; padding: 50px; font-size:200%;"}
+BLUE
+:::
+:::
+
+## References {.smaller}
+
+-   Stephen Few, 2004. Show me the numbers. Analytics Press.
+
+    -   <http://www.perceptualedge.com/blog/>
+
+-   Edward R. Tufte, 1983. The Visual Display of Quantitative Information. Graphics Press.
+
+-   Wilkinson, L. (2006). *The grammar of graphics* . Springer Science & Business Media.
+
+-   Visual Vocabulary <http://ft.com/vocabulary>

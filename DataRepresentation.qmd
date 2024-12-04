@@ -1,0 +1,244 @@
+---
+title: "Data Manipulation"
+author: "Marco Torchiano <marco.torchiano@polito.it>"
+subtitle: "Version 1.0.0 - December 2024"
+#date: 2024-12-04
+format: 
+  revealjs:
+    slide-number: "c"
+    css: revealslides.css
+    logo: "images/DQ.svg"
+---
+
+```{r setup, echo=FALSE, include=FALSE}
+options(width = 55)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+theme_set(theme_bw())
+ggplot2::update_geom_defaults("point", list(color = "darkorange1"))
+ggplot2::update_geom_defaults("line", list(color = "darkorange1"))
+ggplot2::update_geom_defaults("bar", list(fill="moccasin",color="darkorange"))
+ggplot2::update_geom_defaults("col", list(fill="moccasin",color="darkorange"))
+
+```
+
+## Agenda
+
+-   Data representation
+-   Tidy data
+
+# Data representation
+
+## Tabular Data
+
+Tables are structured into *rows*
+
+-   a row contains information about some item (a.k.a. case or observation)
+-   all rows consist of the same number of *cells* (possibly empty)
+-   cells in the same position describe the same property of the items
+-   the first row contains the *headers*, that identify the name of the properties
+
+## Tabular Data in R
+
+It is *usually* represented using an dataframe
+
+-   each element is a row
+-   attributes are the columns
+
+```{r}
+#| echo: true
+got <-
+data.frame(
+     ID = c(4321, 5765, 4663, 9896),
+Surname = c("Snow","Lannister","Targaryen","Stark"),
+   Name = c("Jon", "Tyrion", "Daenerys", "Arya"),
+ Animal = c("Wolf","Lion","Dragon","Wolf")
+)
+```
+
+## Tabular Data example
+
+```{r}
+#| echo: false
+knitr::kable(got)
+```
+
+## CSV
+
+### Comma Separated Values
+
+Textual representation of tabular data
+
+-   text file containing records separated by newlines
+-   fields inside a record separated by commas `,`
+-   first record may contain *headers*
+-   double-quote (`"`) are used to enclose text
+    -   ddq: `"This ""is"" quoted"`
+-   mime type is `text/csv`
+
+## Represent a table in CSV
+
+```{r}
+#| echo: true
+csv_content <- 
+"ID,Surname,Name,Animal
+4321,Snow,Jon,Wolf
+5765,Lannister,Tyrion,Lion
+4663,Targaryen,Daenerys,Dragon
+9896,Stark,Arya,Wolf"
+```
+
+## Reading a CSV
+
+```{r}
+#| echo: true
+csv_got <- read.csv(text=csv_content)
+csv_got
+```
+
+## Represent a table in CSV (; delimited)
+
+```{r}
+#| echo: true
+csv_content_ <- 
+"ID;Surname;Name
+4321;Snow;Jon
+5765;Lannister;Tyrion
+4663;Targaryen;Daenerys
+9896;Stark;Arya"
+```
+
+## Reading a CSV
+
+```{r}
+#| echo: TRUE
+csv_got <- read.csv2(text=csv_content_)
+csv_got
+```
+
+## JSON
+
+### Java Script Object Notation
+
+Format for data interchange:
+
+-   lightweight format
+    -   more compact than XML
+-   language independent
+-   "self-describing" and easy to understand
+-   standard
+    -   The file extension is `.json`
+    -   The MIME type is `application/json`
+
+## JSON Table representation
+
+```{r}
+#| echo: TRUE
+
+json_content <-
+'[{"ID":4321,"Surname":"Snow","Name":"Jon"},
+  {"ID":5765,"Surname":"Lannister","Name":"Tyrion"},
+  {"ID":4663,"Surname":"Targaryen","Name":"Daenerys"},
+  {"ID":9896,"Surname":"Stark","Name":"Arya"}]'
+```
+
+## Reading JSON
+
+```{r}
+#| echo: TRUE
+library(jsonlite)
+got_json <- fromJSON(json_content) 
+got_json # transform to dataframe
+```
+
+# Tidy data
+
+## Tidy data
+
+*Tidy data* is a structured approach to organize data where:
+
+1.  Each variable/measure must have its own column.
+2.  Each observation/item must have its own row.
+3.  Each value must have its own cell.
+
+Tidy data:
+
+-   are easier to understand
+-   make manipulation simpler by using a uniform approach
+-   leverage vectorial features of R
+
+## Example dataset
+
+First formatting `table1`:
+
+```{r example from R4DS, echo=FALSE}
+table1 <- read_csv(
+'   country,      year, cases, population
+   "Afghanistan",  1999,    745,   19987071
+   "Afghanistan",  2000,   2666,   20595360
+   "Brazil",       1999,  37737,  172006362
+   "Brazil",       2000,  80488,  174504898
+   "China",        1999, 212258, 1272915272
+   "China",        2000, 213766, 1280428583
+',col_type=cols(year=col_integer(),cases=col_integer(),population=col_integer()))
+knitr::kable(table1)
+
+table2 <- pivot_longer(table1, c("cases","population"), names_to="type", values_to="count")
+
+table3 <- table1 %>% mutate(rate=paste0(cases,"/",population)) %>%
+                     select(-cases,-population)
+
+table4a <- table1 %>% pivot_wider(id_cols = country, names_from="year", values_from="cases")
+
+table4b <- table1 %>% pivot_wider(id_cols = country, names_from="year", values_from="population")
+```
+
+## Example dataset (2) {.smaller}
+
+```{r , echo=FALSE}
+knitr::kable(table2)
+```
+
+## Example dataset (3) {.smaller}
+
+Another one `table3`:
+
+```{r , echo=FALSE}
+knitr::kable(table3)
+```
+
+## Example dataset (4) {.smaller}
+
+Same data spread over two tables.
+
+Cases `table4a`:
+
+```{r , echo=FALSE, results="asis"}
+knitr::kable(table4a)
+```
+
+Population `table4b`:
+
+```{r , echo=FALSE, results="asis"}
+knitr::kable(table4b)
+```
+
+## Exercise
+
+Which tables are tidy?
+
+Which are not tidy, and why?
+
+## Answers {.smaller}
+
+-   `table1` is the only tidy table
+-   `table2` is not tidy
+    -   uses the same column (`count`) for two distinct measures: *cases* and *population*
+    -   uses two rows for each observation
+-   `table3`is not tidy
+    -   merges two distinct measures into the same cell (`rate`)
+-   `table4a` and `table4b` are not tidy
+    -   both spread two distinct observations (for year *1999* and *2000*) on two columns instead of using two rows
+
+# Long vs. Wide dataframes
