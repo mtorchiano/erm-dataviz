@@ -8,6 +8,7 @@ format:
     slide-number: "c"
     css: revealslides.css
     logo: "images/DQ.svg"
+    embed-resources: true
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}

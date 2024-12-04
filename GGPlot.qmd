@@ -7,7 +7,7 @@ format:
     slide-number: "c"
     css: revealslides.css
     logo: "images/hex-ggplot2.png"
-    #theme: white
+    embed-resources: true
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}

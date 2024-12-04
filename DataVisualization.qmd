@@ -8,6 +8,7 @@ format:
     slide-number: "c"
     css: revealslides.css
     logo: "images/DataViz-logo.svg"
+    embed-resources: true
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
@@ -117,7 +118,7 @@ A single number means nothing.
 
 ## Visual Perception
 
-![](images/VisualPerception_schema.svg)
+![](images/VisualPerception-Model.svg)
 
 ## Memory Hierarchy
 
