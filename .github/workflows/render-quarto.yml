@@ -1,0 +1,41 @@
+name: Render Presentations
+
+on:
+  push:
+    branches:
+      - main # Replace with your branch name if different
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  render-quarto:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up R environment
+      uses: r-lib/actions/setup-r@v2
+
+    - name: Install Quarto
+      run: |
+        wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.39/quarto-1.6.39-linux-amd64.deb
+        sudo dpkg -i quarto-1.6.39-linux-amd64.deb
+
+    - name: Install R packages
+      run: |
+        Rscript -e 'install.packages(c("renv"))'
+        Rscript -e 'renv::restore()'
+        # Rscript -e 'install.packages(c("quarto", "ggplot2", "dplyr"))' # Add any required packages here
+
+    - name: Render Quarto Document
+      run: |
+        quarto render DataVisualization.qmd
+        quarto render DataRepresentation.qmd
+        quarto render GGPlot.qmd
+
+    - name: Upload rendered presentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: revealjs-presentations
+        path: *.html # Replace with the output file name, if different
